@@ -1,27 +1,28 @@
 <template>
-  <div id="default">
-    <div class="w-[100%] bg-gray-100 h-[70px]  items-center	">
-      <div class="inline-block">
-        <h1 class="font-bold">
-          API DE SUPERHEROES
-        </h1>
+  <div>
+    <div class="w-[100%] bg-gray-100 sm:h-[4.375rem]  items-center	grid grid-cols-3">
+      <div class="sm:col-span-1 col-span-2">
+        <div class="inline-block sm:mx-[1.25rem]">
+          <h1 class="font-bold sm:text-xl text-lg">
+            SUPERHERO API
+          </h1>
+        </div>
+        <div class="inline-block ">
+          <h1 class="font-bold sm:text-xl text-lg hover:text-stone-500 duration-500">
+            <nuxtLink to="/">| HOME</nuxtLink>
+          </h1>
+        </div>
       </div>
-      <div class="inline-block">
-        <h1 class="font-bold hover:text-stone-500 duration-500">
-          INCIO
-        </h1>
-      </div>
-      <div>
-        <div class="flex border  duration-300 rounded-full w-[250px] h-[40px] justify-center 
-                                  items-center focus-within:border-black ">
-          <img src="../static/icons8-búsqueda-50.png" class="w-[30px] h-[30px] mr-[3px]" alt="No sirve esta mierda">
-          <input type="text" v-model="busquedaPalabra" placeholder="busqueda"
-            class="h-[30px] w-[200px] bg-gray-100 focus:outline-0" @keydown.enter="busqueda">
+      <div class="sm:col-span-2	justify-self-end	sm:mr-[3.125rem] my-[0.313rem]">
+        <div class="flex border  duration-300 rounded-full sm:w-[15.625rem] sm:h-[2.5rem] justify-center 
+                                      items-center focus-within:border-black w-[15rem] h-[3.125rem]">
+          <img src="../static/icons8-búsqueda-50.png" class="sm:w-[1.875rem] sm:h-[1.875rem] sm:mr-[0.188rem] w-[1.8rem]" alt="No sirve esta mierda">
+          <input type="text" v-model="busquedaPalabra" placeholder="shearch"
+            class="sm:h-[1.875rem] sm:w-[12.5rem] w-[10rem] bg-gray-100 focus:outline-0" @keydown.enter="busqueda">
         </div>
       </div>
     </div>
-    <modales text='No se encontró el super héroe' v-if="bandera" @cambia="cerrar" :class="{ animar: active }" />
-    <Nuxt :class="{ per: activeDos }" />
+    <Nuxt />
   </div>
 </template>
 <script>
@@ -33,9 +34,6 @@ export default {
       busquedaPalabra: '',
       name: '',
       id: '',
-      bandera: false,
-      active: false,
-      activeDos: false,
     }
   },
   methods: {
@@ -47,44 +45,14 @@ export default {
           this.id = response.data.results[0].id
           this.$router.push(`${this.id}`)
         } else if (response.data.response == "error") {
-          this.bandera = true
-          this.active = true
-          this.activeDos = true
+          this.$router.push(`error`)
+
         }
         this.busquedaPalabra = ''
 
       }
     },
-    cerrar() {
-      this.bandera = false
-      this.activeDos = false
-    }
+
   }
 }
 </script>
-<style>
-.animar {
-  -webkit-animation-name: animarsuperior;
-  -webkit-animation-duration: 0.5s;
-  animation-name: animarsuperior;
-  animation-duration: 0.5s;
-}
-
-
-@keyframes animarsuperior {
-  from {
-    top: -300px;
-    opacity: 0
-  }
-
-  to {
-    top: 0;
-    opacity: 1
-  }
-}
-
-.per {
-  background-color: rgb(165, 165, 165);
-  opacity: .2;
-}
-</style>
