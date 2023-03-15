@@ -1,18 +1,19 @@
 <template>
   <div>
-    <div ref="contenedor" class="grid sm:grid-cols-4 sm:px-[0.625rem] pt-[10px] sm:pt-[1.875rem] sm:mx-[3.125rem]">
-      <card v-for="i, index in 12" :key="i" :link="image[i - 1]" :name="name[i - 1]" :race="race[i - 1]" :idn="id[i - 1]" :to="`/${id[i - 1]}`"
-        :occupation="occupation[i - 1]" :id="index" class="animate__animated animate__zoomIn animate__slower"/>
+    <div ref="contenedor" class="grid 2xl:grid-cols-4 sm:grid-cols-2 lg:grid-cols-3  2xl:px-[0.625rem] pt-[0.625rem] 2xl:pt-[1.875rem] 2xl:mx-[3.125rem]">
+      <card v-for="i, index in id" :key="i" :link="image[index]" :name="name[index]" :race="race[index]" :idn="id[index]"
+        :to="`/${id[index]}`" :occupation="occupation[index]" :id="index"   
+        class="animate__animated animate__zoomIn animate__slower" />
     </div>
-    <div class="flex justify-center items-center sm:h-[6.25rem]">
-      <button @click="previousPage" class="sm:w-[9.375rem] sm:mt-[0.625rem] hover:bg-[#9F9C9C] duration-500 rounded-full 
-      sm:border-[0.156rem] border-black sm:h-[3.125rem] sm:mr-[0.625rem] transition ease-in-out delay-150 hover:scale-110
-      h-[3.125rem] w-[6.25rem] my-[0.938rem]" v-if="pag">
+    <div class="flex justify-center items-center 2xl:h-[6.25rem]">
+      <button @click="previousPage" class="2xl:w-[9.375rem] 2xl:mt-[0.625rem] hover:bg-[#9F9C9C] duration-500 rounded-full 
+        2xl:border-[0.156rem] border-black 2xl:h-[3.125rem] 2xl:mr-[0.625rem] transition ease-in-out delay-150 hover:scale-110
+        h-[3.125rem] w-[6.25rem] my-[0.938rem] sm:w-[8rem] " v-if="pag">
         Previous
       </button>
-      <button @click="nextPage" class=" sm:w-[9.375rem] sm:mt-[0.625rem] hover:bg-[#9F9C9C] duration-500 rounded-full 
-      sm:border-[0.156rem] border-black sm:h-[3.125rem] transition ease-in-out delay-150 hover:scale-110
-      h-[3.125rem] w-[6.25rem] my-[0.938rem]    " v-if="pagFinal">
+      <button @click="nextPage" class=" 2xl:w-[9.375rem] 2xl:mt-[0.625rem] hover:bg-[#9F9C9C] duration-500 rounded-full 
+        2xl:border-[0.156rem] border-black 2xl:h-[3.125rem] transition ease-in-out delay-150 hover:scale-110
+        h-[3.125rem] w-[6.25rem] my-[0.938rem]  sm:w-[8rem] " v-if="pagFinal">
         Next
       </button>
     </div>
@@ -69,6 +70,7 @@ export default {
       this.create()
     },
     async create() {
+      console.log(this.id)
       for (let i = this.inicio; i <= this.final; i++) {
         const response = await this.$axios.get(this.url + `${i}`)
         const data = response.data
@@ -88,9 +90,8 @@ export default {
       }
     }
   },
-  async created() {
-    console.log(this.$route)
-    await this.create()
-  }
+  beforeMount() {
+    this.create()
+    },
 }
 </script>
